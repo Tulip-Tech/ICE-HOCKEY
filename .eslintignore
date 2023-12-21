@@ -1,0 +1,9 @@
+# Modules
+node_modules/
+
+# Test
+coverage/
+
+# Build output
+build/
+build.tar.gz
