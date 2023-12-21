@@ -12,6 +12,7 @@
     "prepare": "husky install",
     "start": "vite",
     "start:test": "vite build --mode test && vite preview --port 8080",
+    "start:prod": "vite preview --port 8080 --host",
     "build": "vite build --mode ${MODE:=prod} && sh scripts/compressIni.sh build/public/.webapp.ini",
     "tarbuild": "node tarbuild.mjs",
     "test": "TZ=UTC LC_ALL=en_US.UTF-8 vitest run",
