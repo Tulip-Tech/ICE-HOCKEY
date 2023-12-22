@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     def servers = ['10.217.137.8']
-                    def branch = 'develop'
+                    def branch = 'ICE-WEBAPPS'
                     deploy_old(servers, branch)
                 }
             }
