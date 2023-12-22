@@ -26,12 +26,12 @@ pipeline {
         }
         stage('Deploy to develop') {
             when {
-                branch 'ICE-WEBAPPS'
+                branch 'AHL-WEBAPPS'
             }
             steps {
                 script {
                     def servers = ['10.217.137.8']
-                    def branch = 'ICE-WEBAPPS'
+                    def branch = 'AHL-WEBAPPS'
                     deploy_old(servers, branch)
                 }
             }
