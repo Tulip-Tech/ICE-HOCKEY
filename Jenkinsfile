@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Deploy to develop') {
             when {
-                branch 'develop'
+                branch 'ICE-WEBAPPS'
             }
             steps {
                 script {
