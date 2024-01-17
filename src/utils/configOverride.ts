@@ -1,33 +1,34 @@
-import type { NavigateFunction } from 'react-router/dist/lib/hooks';
-import { useLayoutEffect, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import type { NavigateFunction } from "react-router/dist/lib/hooks";
+import { useLayoutEffect, useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 
-import { logDev } from '#src/utils/common';
-import type { Settings } from '#src/stores/SettingsStore';
+import { logDev } from "#src/utils/common";
+import type { Settings } from "#src/stores/SettingsStore";
+import { useSettingsStore } from "#src/stores/SettingsStore";
 
 // Use local storage so the override persists until cleared
 const storage = window.localStorage;
 
-const configQueryKey = 'app-config';
-const configLegacyQueryKey = 'c';
+const configQueryKey = "app-config";
+const configLegacyQueryKey = "c";
 
-const configFileStorageKey = 'config-file-override';
+const configFileStorageKey = "config-file-override";
 
 export function getConfigNavigateCallback(navigate: NavigateFunction) {
   return (configSource: string) => {
     navigate(
       {
-        pathname: '/',
-        search: new URLSearchParams([[configQueryKey, configSource]]).toString(),
+        pathname: "/",
+        search: new URLSearchParams([[configQueryKey, configSource]]).toString()
       },
-      { replace: true },
+      { replace: true }
     );
   };
 }
 
 function getConfigSource(configKey: string | null, settings: Settings | undefined) {
   if (!settings) {
-    return '';
+    return "";
   }
 
   // Skip all the fancy logic below if there aren't any other options besides the default anyhow
@@ -60,7 +61,7 @@ function getConfigSource(configKey: string | null, settings: Settings | undefine
       return storedSource;
     }
 
-    logDev('Invalid stored config: ' + storedSource);
+    logDev("Invalid stored config: " + storedSource);
     storage.removeItem(configFileStorageKey);
   }
 
@@ -72,6 +73,18 @@ export function useConfigSource(settings?: Settings) {
 
   const configKey = searchParams.get(configQueryKey) ?? searchParams.get(configLegacyQueryKey);
   const configSource = useMemo(() => getConfigSource(configKey, settings), [configKey, settings]);
+
+  useLayoutEffect(() => {
+    if (configSource) {
+      const { playerId, playerLicenseKey } = getPlayerIdBasedOnConfigKey(configSource);
+      if (playerId) {
+        useSettingsStore.setState({
+          playerId,
+          playerLicenseKey
+        });
+      }
+    }
+  }, [configSource]);
 
   // Update the query string to maintain the right params
   useLayoutEffect(() => {
@@ -86,7 +99,7 @@ export function useConfigSource(settings?: Settings) {
           s.delete(configLegacyQueryKey);
           return s;
         },
-        { replace: true },
+        { replace: true }
       );
     }
 
@@ -95,10 +108,9 @@ export function useConfigSource(settings?: Settings) {
       setSearchParams(
         (s) => {
           s.delete(configQueryKey);
-
           return s;
         },
-        { replace: true },
+        { replace: true }
       );
     }
 
@@ -109,7 +121,7 @@ export function useConfigSource(settings?: Settings) {
           s.set(configQueryKey, configSource);
           return s;
         },
-        { replace: true },
+        { replace: true }
       );
     }
   }, [configSource, searchParams, setSearchParams, configQueryKey, configLegacyQueryKey, configSource, settings]);
@@ -126,4 +138,48 @@ function isValidConfigSource(source: string, settings: Settings) {
   return (
     settings?.defaultConfigSource === source || (settings?.additionalAllowedConfigSources && settings?.additionalAllowedConfigSources.indexOf(source) >= 0)
   );
+}
+
+function getPlayerIdBasedOnConfigKey(configKey: string) {
+  if (configKey === "hdavk952") {
+    return {
+      playerId: "4IEZK60y",
+      playerLicenseKey: "gEefoN8ngcr+HE/wTpGuW0FDAeuVkbCcDY6biSUr+z/DiIJi"
+    };
+  } else if (configKey === "kadtpmni") {
+    return {
+      playerId: "QbSeXEWM",
+      playerLicenseKey: "pKqtA5xpM91wlx/y4ksw96Lo7RyAvRCPMlTTP91KZU9PYn9e"
+    };
+  } else if (configKey === "5pqjydi5") {
+    return {
+      playerId: "INcjxsSD",
+      playerLicenseKey: "KytQqKuPdp5SxWRnwbPWHY7v36IU6jjwHWL4vl1g0w56/RE9"
+    };
+  } else if (configKey === "6ro4zi4d") {
+    return {
+      playerId: "hpfx5DO8",
+      playerLicenseKey: "EIVv0Su+o3l7XzUDxqnc6We1JtX+LhO8uXh+klOU7CqCZUv2"
+    };
+  } else if (configKey === "285bgzdg") {
+    return {
+      playerId: "jgaFqUWd",
+      playerLicenseKey: "GgAv7LvTabYJDLI/D3HACEGZ/Og5JnlW1Fp1FKdBM1ASqYY5"
+    };
+  }  else if (configKey === "cgxhhvsw") {
+    return {
+      playerId: "0kDYylTd",
+      playerLicenseKey: "h7pcX2QEdvwH1m+zRxqNVZhGN4wppZjajD5NJ7IQOqvyLe7o"
+    };
+  }  else if (configKey === "2u8kwuqc") {
+    return {
+      playerId: "0A2sNt2s",
+      playerLicenseKey: "d7369EQBKK4I/21F1qa0mgXSH0cR57A9jGY5Fod5PbBW6lXz"
+    };
+  } else {
+    return {
+      playerId: "",
+      playerLicenseKey: ""
+    };
+  }
 }
