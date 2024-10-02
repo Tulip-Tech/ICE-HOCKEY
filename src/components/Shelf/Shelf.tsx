@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import { Link, useLocation } from 'react-router-dom'; // React Router's Link component
 
 import styles from './Shelf.module.scss';
 
@@ -13,7 +14,7 @@ import TileDock from '#components/TileDock/TileDock';
 import Card, { type PosterAspectRatio } from '#components/Card/Card';
 import type { Playlist, PlaylistItem } from '#types/playlist';
 import { mediaURL } from '#src/utils/formatting';
-import { PersonalShelf } from '#src/stores/ConfigStore';
+import { PersonalShelf, useConfigStore } from '#src/stores/ConfigStore';
 
 export const tileBreakpoints: Breakpoints = {
   [Breakpoint.xs]: 1,
@@ -67,6 +68,9 @@ const Shelf = ({
   const breakpoint: Breakpoint = useBreakpoint();
   const { t } = useTranslation('common');
   const [didSlideBefore, setDidSlideBefore] = useState(false);
+  const appConfigId = useConfigStore(({ config }) => config.id);
+  const location = useLocation();
+
   const tilesToShow: number = (featured ? featuredTileBreakpoints[breakpoint] : tileBreakpoints[breakpoint]) + visibleTilesDelta;
 
   const renderTile = useCallback(
@@ -137,7 +141,23 @@ const Shelf = ({
 
   return (
     <div className={classNames(styles.shelf, { [styles.featured]: featured })}>
-      {!featured ? <h2 className={classNames(styles.title, { [styles.loading]: loading })}>{title || playlist.title}</h2> : null}
+      {!featured ? (
+        <div className={styles.header}>
+          <div className={styles.viewAll}>
+            <h2 className={classNames(styles.title, { [styles.loading]: loading })}>{title || playlist.title}</h2>
+            {appConfigId === 'cgxhhvsw' && (
+              <Link to={`${location.pathname}p/${playlist.feedid}${location.search}`} className={styles.link}>
+                <button className={styles.title} style={{ cursor: 'pointer' }}>
+                  View All
+                </button>
+                <div style={{ fontSize: '24px' }}>
+                  <ChevronRight />
+                </div>
+              </Link>
+            )}
+          </div>
+        </div>
+      ) : null}
       <TileDock<PlaylistItem>
         items={playlist.playlist}
         tilesToShow={tilesToShow}
