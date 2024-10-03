@@ -147,12 +147,10 @@ const Shelf = ({
             <h2 className={classNames(styles.title, { [styles.loading]: loading })}>{title || playlist.title}</h2>
             {appConfigId === 'cgxhhvsw' && (
               <Link to={`${location.pathname}p/${playlist.feedid}${location.search}`} className={styles.link}>
-                <button className={styles.title} style={{ cursor: 'pointer' }}>
+                <button className={styles.title} style={{ cursor: 'pointer', opacity: 0.75, fontSize: 'small' }}>
                   View All
                 </button>
-                <div style={{ fontSize: '24px' }}>
-                  <ChevronRight />
-                </div>
+                <div style={{ fontSize: '12px', textDecoration: 'none', opacity: 0.75, color: 'white', marginLeft: '3px' }}>{'>'}</div>
               </Link>
             )}
           </div>
