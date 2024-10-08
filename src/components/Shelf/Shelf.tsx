@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation } from 'react-router-dom'; // React Router's Link component
+import { Link, useLocation } from 'react-router-dom';
 
 import styles from './Shelf.module.scss';
 
@@ -143,14 +143,12 @@ const Shelf = ({
     <div className={classNames(styles.shelf, { [styles.featured]: featured })}>
       {!featured ? (
         <div className={styles.header}>
-          <div className={styles.viewAll}>
+          <div className={styles.titleContainer}>
             <h2 className={classNames(styles.title, { [styles.loading]: loading })}>{title || playlist.title}</h2>
             {appConfigId === 'cgxhhvsw' && (
               <Link to={`${location.pathname}p/${playlist.feedid}${location.search}`} className={styles.link}>
-                <button className={styles.title} style={{ cursor: 'pointer', opacity: 0.75, fontSize: 'small' }}>
-                  View All
-                </button>
-                <div style={{ fontSize: '12px', textDecoration: 'none', opacity: 0.75, color: 'white', marginLeft: '3px' }}>{'>'}</div>
+                <button className={styles.title}>View All</button>
+                <div className={styles.icon}>{'>'}</div>
               </Link>
             )}
           </div>
