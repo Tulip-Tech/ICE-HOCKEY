@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { Helmet } from 'react-helmet';
 import shallow from 'zustand/shallow';
 
@@ -15,6 +17,9 @@ import { mediaURL } from '#src/utils/formatting';
 
 const PlaylistGrid: ScreenComponent<Playlist> = ({ data, isLoading }) => {
   const { config, accessModel } = useConfigStore(({ config, accessModel }) => ({ config, accessModel }), shallow);
+  const appConfigId = config.id;
+
+  const location = useLocation();
 
   const [filter, setFilter] = useState<string>('');
 
@@ -43,6 +48,12 @@ const PlaylistGrid: ScreenComponent<Playlist> = ({ data, isLoading }) => {
       </Helmet>
       <header className={styles.header}>
         <h2>{data.title}</h2>
+        {appConfigId === 'cgxhhvsw' && (
+          <Link to={`/${location.search}`} className={styles.link}>
+            <div className={styles.icon}>{'<'}</div>
+            <button className={styles.title}>Back</button>
+          </Link>
+        )}
         {shouldShowFilter && <Filter name="genre" value={filter} defaultLabel="All" options={categories} setValue={setFilter} />}
       </header>
       <main className={styles.main}>
