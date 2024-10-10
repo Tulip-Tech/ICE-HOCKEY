@@ -31,6 +31,7 @@
 
 .header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   height: 36px;
   margin: 24px 0;
@@ -39,10 +40,6 @@
     font-family: var(--body-alt-font-family);
     font-weight: var(--body-font-weight-bold);
     font-size: 24px;
-  }
-
-  @include responsive.mobile-and-tablet {
-    justify-content: space-between;
   }
 }
 
@@ -53,4 +50,26 @@
 .error {
   margin: 20px;
   color: var(--primary-color);
+}
+
+.link {
+  display: flex;
+  align-items: baseline;
+  color: var(--card-color);
+  font-size: 24px;
+  text-decoration: none;
+  cursor: pointer;
+
+  button {
+    font-size: medium;
+    cursor: pointer;
+    opacity: 0.75;
+  }
+  .icon {
+    margin-right: 3px;
+    color: var(--primary-color);
+    font-size: medium;
+    text-decoration: none;
+    opacity: 0.75;
+  }
 }
