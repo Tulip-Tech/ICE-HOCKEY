@@ -10,6 +10,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import { Target, viteStaticCopy } from 'vite-plugin-static-copy';
 import viteCompression from 'vite-plugin-compression';
+
 export default ({ mode, command }: ConfigEnv): UserConfigExport => {
   // Shorten default mode names to dev / prod
   // Also differentiates from build type (production / development)
@@ -54,7 +55,10 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
       react(),
       eslintPlugin({ emitError: mode === 'production' || mode === 'demo' || mode === 'preview' }), // Move linting to pre-build to match dashboard
       StylelintPlugin(),
-      VitePWA(),
+      VitePWA({
+        registerType: 'autoUpdate',
+        manifestFilename: 'manifest.json',
+      }),
       createHtmlPlugin({
         minify: true,
         inject: process.env.APP_GOOGLE_SITE_VERIFICATION_ID
@@ -75,7 +79,7 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
       viteStaticCopy({
         targets: fileCopyTargets,
       }),
-        viteCompression(),
+      viteCompression(),
     ],
     define: {
       'import.meta.env.APP_VERSION': JSON.stringify(process.env.npm_package_version),

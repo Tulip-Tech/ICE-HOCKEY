@@ -15,4 +15,7 @@ if (rootElement) {
   console.info('Application - rootElement not found');
 }
 
-registerSW();
+const refresh = registerSW({
+  immediate: true,
+  onNeedRefresh: () => refresh(true),
+});
