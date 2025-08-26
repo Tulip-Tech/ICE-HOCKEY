@@ -207,8 +207,8 @@ const Header: React.FC<Props> = ({
 
         <div className={styles.brand}>
           <Logo src={'/images/ahl.png'} onLoad={() => setLogoLoaded(true)} />
+          <h1 className={styles.title}>{siteTitle}</h1>
         </div>
-        <h1 className={styles.title}>{siteTitle}</h1>
 
         <nav className={styles.nav} aria-label="menu">
           {logoLoaded || !logoSrc ? children : null}

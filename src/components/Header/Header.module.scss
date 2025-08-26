@@ -64,8 +64,10 @@
 // Header brand
 //
 .brand {
+  display: flex;
   align-self: center;
   margin-right: variables.$base-spacing;
+  gap: 12px;
 }
 
 //
