@@ -205,3 +205,14 @@
     width: 80px;
   }
 }
+
+.title {
+  display: flex;
+  align-items: center;
+  margin-right: 50px;
+  margin-left: 5px;
+  color: theme.$alps-color;
+  font-family: var(--alps-font-family);
+  font-weight: 300;
+  font-size: 24px;
+}

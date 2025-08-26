@@ -22,6 +22,8 @@ import Panel from '#components/Panel/Panel';
 import type { Profile } from '#types/account';
 import ProfileCircle from '#src/icons/ProfileCircle';
 import type { AccessModel } from '#types/Config';
+import { useConfigStore } from '#src/stores/ConfigStore';
+import shallow from 'zustand/shallow';
 
 type TypeHeader = 'static' | 'fixed';
 
@@ -90,6 +92,19 @@ const Header: React.FC<Props> = ({
   const headerClassName = classNames(styles.header, styles[headerType], {
     [styles.searchActive]: searchActive,
   });
+
+  const { config } = useConfigStore(({ config }) => ({ config }), shallow);
+
+  const { id, siteName } = config;
+
+  const titleMap: Record<string, string> = {
+    kadtpmni: 'HIGHLIGHTS',
+    hdavk952: 'DOPS VERDICTS',
+    '6ro4zi4d': 'TOP-5 GOALS',
+    default: siteName || '',
+  };
+
+  const siteTitle = titleMap[id as string] || titleMap.default;
 
   // only show the language dropdown when there are other languages to choose from
   const showLanguageSwitcher = supportedLanguages.length > 1;
@@ -189,11 +204,12 @@ const Header: React.FC<Props> = ({
             <Menu />
           </IconButton>
         </div>
-        {logoSrc && (
-          <div className={styles.brand}>
-            <Logo src={logoSrc} onLoad={() => setLogoLoaded(true)} />
-          </div>
-        )}
+
+        <div className={styles.brand}>
+          <Logo src={'/images/ahl.png'} onLoad={() => setLogoLoaded(true)} />
+        </div>
+        <h1 className={styles.title}>{siteTitle}</h1>
+
         <nav className={styles.nav} aria-label="menu">
           {logoLoaded || !logoSrc ? children : null}
         </nav>

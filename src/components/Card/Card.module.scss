@@ -147,7 +147,7 @@ $aspects: ((1, 1), (2, 1), (2, 3), (4, 3), (5, 3), (16, 9), (9, 16), (9, 13));
   height: 2.4em;
   overflow: hidden;
   color: var(--card-color);
-  font-family: var(--body-alt-font-family);
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
   font-weight: var(--body-font-weight-bold);
   font-size: 1em;
   line-height: 1.2em;
@@ -174,7 +174,6 @@ $aspects: ((1, 1), (2, 1), (2, 3), (4, 3), (5, 3), (16, 9), (9, 16), (9, 13));
     font-size: 12px;
   }
 }
-
 
 .meta {
   position: absolute;

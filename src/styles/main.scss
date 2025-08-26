@@ -1,6 +1,6 @@
-@use "theme";
-@use "variables";
-@use "./mixins/responsive";
+@use 'theme';
+@use 'variables';
+@use './mixins/responsive';
 
 :root {
   --primary-color: #{theme.$primary-color};
@@ -8,6 +8,7 @@
   --body-background-color: #{theme.$body-bg-color};
   --body-font-family: #{theme.$body-font-family};
   --body-alt-font-family: #{theme.$body-alt-font-family};
+  --alps-font-family: #{theme.$alps-font-family};
   --body-font-weight-regular: #{theme.$body-font-weight-regular};
   --body-font-weight-bold: #{theme.$body-font-weight-bold};
   --body-color: #{theme.$body-color};
