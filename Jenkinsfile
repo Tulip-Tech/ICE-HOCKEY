@@ -5,7 +5,7 @@ def deploy_old(servers, branch = '') {
         println "Deploying to ${item}."
         sh(script: """
             whoami
-            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${item} bash -c "'./ahl.sh'"
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${item} bash -c "'./jwp.sh'"
         """)
     }
 }
