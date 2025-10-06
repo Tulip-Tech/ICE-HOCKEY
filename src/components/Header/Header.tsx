@@ -207,7 +207,7 @@ const Header: React.FC<Props> = ({
 
         <div className={styles.brand}>
           {config?.id === 'cgxhhvsw' ? (
-            <Logo src={'/images/ice.svg'} onLoad={() => setLogoLoaded(true)} />
+            <Logo src={'/images/ice.png'} onLoad={() => setLogoLoaded(true)} />
           ) : (
             <Logo src={'/images/ahl.png'} onLoad={() => setLogoLoaded(true)} />
           )}
