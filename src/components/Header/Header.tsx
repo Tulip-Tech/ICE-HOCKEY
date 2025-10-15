@@ -1,6 +1,7 @@
 import React, { ReactFragment, useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import shallow from 'zustand/shallow';
 
 import styles from './Header.module.scss';
 
@@ -23,7 +24,6 @@ import type { Profile } from '#types/account';
 import ProfileCircle from '#src/icons/ProfileCircle';
 import type { AccessModel } from '#types/Config';
 import { useConfigStore } from '#src/stores/ConfigStore';
-import shallow from 'zustand/shallow';
 
 type TypeHeader = 'static' | 'fixed';
 
@@ -94,17 +94,6 @@ const Header: React.FC<Props> = ({
   });
 
   const { config } = useConfigStore(({ config }) => ({ config }), shallow);
-
-  const { id, siteName } = config;
-
-  const titleMap: Record<string, string> = {
-    kadtpmni: 'HIGHLIGHTS',
-    hdavk952: 'DOPS VERDICTS',
-    '6ro4zi4d': 'TOP-5 GOALS',
-    default: siteName || '',
-  };
-
-  const siteTitle = titleMap[id as string] || titleMap.default;
 
   // only show the language dropdown when there are other languages to choose from
   const showLanguageSwitcher = supportedLanguages.length > 1;
@@ -206,15 +195,7 @@ const Header: React.FC<Props> = ({
         </div>
 
         <div className={styles.brand}>
-          <Logo src={'/images/ice.png'} onLoad={() => setLogoLoaded(true)} />
-
-          {/*{config?.id === 'cgxhhvsw' ? (
-            <Logo src={'/images/ice.png'} onLoad={() => setLogoLoaded(true)} />
-          ) : (
-            <Logo src={'/images/ahl.png'} onLoad={() => setLogoLoaded(true)} />
-          )}*/}
-
-          <h1 className={styles.title}>{siteTitle}</h1>
+          <Logo src={config?.assets?.banner || '/images/ahl.png'} onLoad={() => setLogoLoaded(true)} />
         </div>
 
         <nav className={styles.nav} aria-label="menu">
